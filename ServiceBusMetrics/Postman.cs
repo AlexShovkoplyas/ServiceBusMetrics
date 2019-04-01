@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ServiceBusMetrics
 {
-    public class MessagePostman
+    public class Postman
     {
         private IMessageSender sender;
         private IMessageReceiver receiver;
 
-        public MessagePostman(IMessageSender sender, IMessageReceiver receiver)
+        public Postman(IMessageSender sender, IMessageReceiver receiver)
         {
             this.sender = sender;
             this.receiver = receiver;
@@ -34,6 +34,24 @@ namespace ServiceBusMetrics
                 .Select(i => new Message(Encoding.UTF8.GetBytes(i.ToString())));
             var tasks = messages.Select(msg => sender.SendAsync(msg));
             return Task.WhenAll(tasks);
+        }
+
+        //TODO: DOES'T WORK !!!
+        public Task SendMessagesSeparatelyFifo(int count)
+        {
+            var messages = Enumerable.Range(0, count)
+                .Select(i => new Message(Encoding.UTF8.GetBytes(i.ToString()))).ToList();
+
+            var taskAll = Task.CompletedTask;
+            for (int i = 0; i < count; i++)
+            {
+                taskAll = taskAll.ContinueWith(_ => 
+                {
+                    System.Console.WriteLine($"Message: {i}");
+                    sender.SendAsync(messages[i]);
+                });
+            }
+            return taskAll;
         }
 
         public Task SendMessagesInBunch(int count)

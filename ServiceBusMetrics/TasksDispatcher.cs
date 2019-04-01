@@ -8,14 +8,14 @@ namespace ServiceBusMetrics
     {
         private IMessageSender sender;
         private IMessageReceiver receiver;
-        private MessagePostman messagePostman;
+        private Postman messagePostman;
 
         public TasksDispatcher(IMessageSender sender, IMessageReceiver receiver, BusSettings settings)
         {
             this.sender = sender;
             this.receiver = receiver;
             Settings = settings;
-            messagePostman = new MessagePostman(sender, receiver);
+            messagePostman = new Postman(sender, receiver);
         }
 
         public BusSettings Settings { get; private set; }
@@ -53,7 +53,14 @@ namespace ServiceBusMetrics
 
         public async Task SendMessagesSeparately(int messagesCount)
         {
+            System.Console.WriteLine("Main : " + messagePostman.SendMessagesSeparately(messagesCount).Status);
             await messagePostman.SendMessagesSeparately(messagesCount);
+            MessagesCount = messagesCount;
+        }
+
+        public async Task SendMessagesSeparatelyFifo(int messagesCount)
+        {
+            await messagePostman.SendMessagesSeparatelyFifo(messagesCount);
             MessagesCount = messagesCount;
         }
 

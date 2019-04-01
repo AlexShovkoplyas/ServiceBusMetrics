@@ -21,6 +21,9 @@ namespace ServiceBusMetrics
         [Method("Separately (in one Task)", ActionType.Send)]
         Task SendMessagesSeparately(int messagesCount);
 
+        [Method("Separately (in one Task FIFO)", ActionType.Send)]
+        Task SendMessagesSeparatelyFifo(int messagesCount);
+
         [Method("In bunch", ActionType.Send)]
         Task SendMessagesInBunch(int messagesCount);
     }

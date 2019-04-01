@@ -14,4 +14,10 @@
     <PackageReference Include="Microsoft.Azure.ServiceBus" Version="3.4.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="results-Last.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

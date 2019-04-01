@@ -27,6 +27,19 @@ namespace ServiceBusMetrics
             BusSettings busSettings;
             ITasksDispatcher dispatcher;
 
+            //ScenariosDictionary = new Dictionary<string, Func<ILifetimeScope, Task>>
+            //{
+            //    {
+            //        "Compare send methods (without/with Load Balancing)",
+            //        async (container) =>
+            //        {
+            //            busSettings = new BusSettings();
+            //            dispatcher = IoCContainer.CreateTasksDispatcher(container, busSettings);
+            //            await dispatcher.SendMessagesSeparatelyFifo(3);
+            //        }
+            //    }
+            //};
+
             ScenariosDictionary = new Dictionary<string, Func<ILifetimeScope, Task>>
             {
                 {
@@ -111,8 +124,8 @@ namespace ServiceBusMetrics
                     }
                 },
 
-                //Handler without messages autocomplete throws exceptions
-            };
+            //    //TODO: Handler without messages autocomplete throws exceptions !!!!
+            //};
         }
     }
 }
